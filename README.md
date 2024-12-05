@@ -8,8 +8,7 @@ Package the application using the maven command:
 $ ./mvnw package
 ```
 
-Setting an environment variable named `SPRING_CONFIG_ADDITIONAL_LOCATION` or `SPRING_CONFIG_IMPORT` to the location of
-the configuration file `samples/config-repo.yml`:
+Setting an environment variable named `SPRING_CONFIG_ADDITIONAL_LOCATION` or `SPRING_CONFIG_IMPORT` to the location of the configuration file, for example `samples/config-repo.yml`:
 
 ```bash
 $ export SPRING_CONFIG_IMPORT=samples/config-repo.yml
@@ -39,9 +38,7 @@ curl -u user:password http://localhost:8888/application/default
 
 ### HTTP Basic authentication
 
-The server is secure with HTTP Basic authentication by Spring Security (via spring-boot-starter-security). The user name
-is "user" and the password is "password". You can override the password with the environment variable
-`SPRING_SECURITY_USER_PASSWORD`. E.g.
+The server is secure with HTTP Basic authentication by Spring Security (via spring-boot-starter-security). The user name is "user" and the password is "password". You can override the password with the environment variable `SPRING_SECURITY_USER_PASSWORD`. E.g.
 
 ```bash
 $ SPRING_SECURITY_USER_PASSWORD=pass123
@@ -74,28 +71,24 @@ curl -u user:password http://localhost:8888/decrypt -d $VALUE
 
 We will use the [OpenSSL](https://www.openssl.org/) command line tool to generate the certificates.
 
-1. Generate CA
+1. **Generate CA**
 
-First of all, we need a certificate authority (CA) that both the client and the server will trust. We generate these
-using openssl.
+First of all, we need a certificate authority (CA) that both the client and the server will trust. We generate these using openssl.
 
 ```bash
 mkdir -p samples/tls/ca
 openssl req -new -x509 -nodes -days 365 -subj '/CN=my-ca' -keyout samples/tls/ca/ca.key -out samples/tls/ca/ca.crt
 ```
 
-This now puts a private key in ca.key and a certificate in ca.crt on our filesystem. We can inspect these a little
-further with the following.
+This now puts a private key in ca.key and a certificate in ca.crt on our filesystem. We can inspect these a little further with the following.
 
 ```bash
 openssl x509 --in samples/tls/ca/ca.crt -text --noout
 ```
 
-Looking at the output, we see some interesting things about our CA certificate. Most importantly the X509v3 Basic
-Constraints value is set CA:TRUE, telling us that this certificate can be used to sign other certificates (like CA
-certificates can).
+Looking at the output, we see some interesting things about our CA certificate. Most importantly the X509v3 Basic Constraints value is set CA:TRUE, telling us that this certificate can be used to sign other certificates (like CA certificates can).
 
-2. Generate Server key and certificate
+2. **Generate Server key and certificate**
 
 The server now needs a key and certificate. Key generation is simple, as usual:
 
@@ -121,7 +114,7 @@ openssl x509 -req -in samples/tls/server/tls.csr -CA samples/tls/ca/ca.crt -CAke
 Inspecting the server certificate, you can see that it’s quite a bit simpler than the CA certificate. We’re only able to
 use this certificate for the subject that we nominated; localhost.
 
-3. Generate Client key and certificate
+3. **Generate Client key and certificate**
 
 The generation of the client certificates is very much the same as the server.
 
@@ -139,10 +132,9 @@ openssl x509 -req -in samples/tls/client/tls.csr -CA samples/tls/ca/ca.crt -CAke
 
 The subject in this case is my-client.
 
-The -CAcreateserial number also ensures that we have unique serial numbers between the server and client certificates.
-Again, this can be verified when you inspect the certificate.
+The `-CAcreateserial` number also ensures that we have unique serial numbers between the server and client certificates. Again, this can be verified when you inspect the certificate.
 
-4. Run Config Server
+4. **Run Config Server**
 
 Run the Config Server application:
 
@@ -151,7 +143,7 @@ $ export SPRING_CONFIG_IMPORT=file:samples/config-repo-tls.yml
 $ java -jar target/spring-config-server-1.0.0-SNAPSHOT.jar 
 ```
 
-5. Test with certificates and keys
+5. **Test with certificates and keys**
 
 ```bash
 curl \
