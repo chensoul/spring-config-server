@@ -154,6 +154,29 @@ curl \
     https://localhost:8888/application/default/main
 ```
 
+## Enable AOT
+
+Disable the refresh scope in the application.yaml file:
+
+```yaml
+spring:
+  cloud:
+    refresh:
+      enabled: false
+```
+
+Install GraalVM JDK:
+
+```bash
+sdk install java 21.0.5-graal 
+```
+
+Run maven command to compile the native image:
+
+```bash
+./mvnw -Pnative native:compile
+```
+
 ## Run with Docker
 
 Create an image with [buildpack](https://buildpacks.io/).
