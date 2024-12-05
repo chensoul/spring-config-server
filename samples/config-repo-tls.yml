@@ -1,0 +1,22 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          clone-on-start: true
+          uri: https://github.com/spring-cloud-samples/config-repo
+          default-label: main
+
+server.ssl:
+  bundle: server
+  client-auth: NEED
+
+spring.ssl:
+  bundle:
+    pem:
+      server:
+        keystore:
+          certificate: file:samples/tls/server/tls.crt
+          private-key: file:samples/tls/server/tls.key
+        truststore:
+          certificate: file:samples/tls/ca/ca.crt
