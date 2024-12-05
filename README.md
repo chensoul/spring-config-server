@@ -5,19 +5,19 @@
 Package the application using the maven command:
 
 ```bash
-$ ./mvnw package
+./mvnw package
 ```
 
 Setting an environment variable named `SPRING_CONFIG_ADDITIONAL_LOCATION` or `SPRING_CONFIG_IMPORT` to the location of the configuration file, for example `samples/config-repo.yml`:
 
 ```bash
-$ export SPRING_CONFIG_IMPORT=samples/config-repo.yml
+export SPRING_CONFIG_IMPORT=samples/config-repo.yml
 ```
 
 Using Java 17+ or higher, run the Config Server application:
 
 ```bash
-$ java -jar target/spring-config-server-1.0.0-SNAPSHOT.jar 
+java -jar target/spring-config-server-1.0.0-SNAPSHOT.jar 
 ```
 
 To verify, you can use curl to fetch the configuration for the default application and profile by running:
@@ -41,7 +41,7 @@ curl -u user:password http://localhost:8888/application/default
 The server is secure with HTTP Basic authentication by Spring Security (via spring-boot-starter-security). The user name is "user" and the password is "password". You can override the password with the environment variable `SPRING_SECURITY_USER_PASSWORD`. E.g.
 
 ```bash
-$ SPRING_SECURITY_USER_PASSWORD=pass123
+SPRING_SECURITY_USER_PASSWORD=pass123
 ```
 
 ### Encryption and decryption
@@ -57,7 +57,7 @@ keytool -genkeypair -alias mytestkey -keyalg RSA\
 Run the Config Server application with the environment variable `ENCRYPT_KEYSTORE_PASSWORD` set to the keystore password:
 
 ```bash
-$ ENCRYPT_KEYSTORE_PASSWORD=changeit java -jar target/*.jar
+ENCRYPT_KEYSTORE_PASSWORD=changeit java -jar target/*.jar
 ```
 
 Test encryption and decryption with the following commands:
@@ -139,8 +139,8 @@ The `-CAcreateserial` number also ensures that we have unique serial numbers bet
 Run the Config Server application:
 
 ```bash
-$ export SPRING_CONFIG_IMPORT=file:samples/config-repo-tls.yml
-$ java -jar target/spring-config-server-1.0.0-SNAPSHOT.jar 
+export SPRING_CONFIG_IMPORT=file:samples/config-repo-tls.yml
+java -jar target/spring-config-server-1.0.0-SNAPSHOT.jar 
 ```
 
 5. **Test with certificates and keys**
