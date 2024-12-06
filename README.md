@@ -17,7 +17,7 @@ export SPRING_CONFIG_IMPORT=samples/config-repo.yml
 Using Java 17+ or higher, run the Config Server application:
 
 ```bash
-java -jar target/spring-config-server-1.0.0-SNAPSHOT.jar 
+java -jar target/spring-config-server-0.0.1-SNAPSHOT.jar 
 ```
 
 To verify, you can use curl to fetch the configuration for the default application and profile by running:
@@ -140,7 +140,7 @@ Run the Config Server application:
 
 ```bash
 export SPRING_CONFIG_IMPORT=file:samples/config-repo-tls.yml
-java -jar target/spring-config-server-1.0.0-SNAPSHOT.jar 
+java -jar target/spring-config-server-0.0.1-SNAPSHOT.jar 
 ```
 
 5. **Test with certificates and keys**
@@ -184,8 +184,8 @@ Create an image with [buildpack](https://buildpacks.io/).
 ```bash
 brew install buildpacks/tap/pack
 
-pack build spring-config-server:1.0.0 \
-  --path ./spring-config-server-1.0.0-SNAPSHOT.jar \
+pack build spring-config-server:0.0.1 \
+  --path ./spring-config-server-0.0.1-SNAPSHOT.jar \
   --builder paketobuildpacks/builder:tiny
 ```
 
@@ -193,15 +193,15 @@ pack build spring-config-server:1.0.0 \
 > different builder:
 >
 > ```bash
-> pack build spring-config-server:1.0.0 \
-> --path target/spring-config-server-1.0.0-SNAPSHOT.jar \
+> pack build spring-config-server:0.0.1 \
+> --path target/spring-config-server-0.0.1-SNAPSHOT.jar \
 > --builder dashaun/builder:tiny
 > ```
 
 Or you can create an image using docker build.
 
 ```bash
-docker build -t spring-config-server:1.0.0 .
+docker build -t chensoul/spring-config-server:0.0.1 .
 ```
 
 Start the container by running:
@@ -211,7 +211,15 @@ docker run -it \
   -p 8888:8888 \
   --mount type=bind,source="$(pwd)"/samples,target=/app/samples \
   -e SPRING_CONFIG_IMPORT='file:samples/config-repo-tls.yml' \
-  spring-config-server:1.0.0
+  chensoul/spring-config-server:0.0.1
+```
+
+Alternatively, you can push the image to docker hub:
+
+```bash
+docker login
+docker tag chensoul/spring-config-server:0.0.1 chensoul/spring-config-server:latest
+docker push chensoul/spring-config-server:0.0.1
 ```
 
 ## Enabling Client Applications
